@@ -1,0 +1,5 @@
+openai
+lazypredict
+python-dotenv
+pandas
+tensorflow
