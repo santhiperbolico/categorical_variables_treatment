@@ -1,3 +1,4 @@
+attr
 openai
 lazypredict
 python-dotenv
