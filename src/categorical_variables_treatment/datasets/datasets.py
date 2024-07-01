@@ -4,7 +4,7 @@ import pandas as pd
 from attr import attrs
 from sklearn.preprocessing import LabelEncoder
 
-from models.models import ModelsType
+from categorical_variables_treatment.models.models import ModelsType
 
 
 @attrs

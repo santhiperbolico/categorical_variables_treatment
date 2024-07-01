@@ -9,8 +9,8 @@ from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.decomposition import PCA
 from openai import OpenAI
 
-from datasets.datasets import DataSet
-from models.models import ModelsType
+from categorical_variables_treatment.datasets.datasets import DataSet
+from categorical_variables_treatment.models.models import ModelsType
 
 
 def create_embedding(client: OpenAI, values: np.ndarray, col_name: str) -> pd.DataFrame:
