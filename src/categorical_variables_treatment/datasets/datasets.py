@@ -129,7 +129,7 @@ def get_dataset(name_dataset: str) -> DataSet:
         HousingDataSet.name: HousingDataSet
     }
     try:
-        return dic_datasets[name_dataset]
+        return dic_datasets[name_dataset]()
     except KeyError:
         raise ValueError(f"El dataset {name_dataset} no está implementado. Prueba con"
                          f"alguno de: {list(dic_datasets.keys())}")
