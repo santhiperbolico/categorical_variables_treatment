@@ -33,6 +33,8 @@ def create_embedding(client: OpenAI, values: np.ndarray, col_name: str) -> pd.Da
 
     """
     embedding_list = []
+    columns = []
+    k = 0
     for val in values:
         response = client.embeddings.create(
           input=f"{col_name}: {val}",
@@ -43,12 +45,14 @@ def create_embedding(client: OpenAI, values: np.ndarray, col_name: str) -> pd.Da
         print(f"\t -Data Len {len(response.data)}")
         print(f"\t -Embedding Shape {len(embedding)}")
         embedding_list.append(embedding)
+        columns.append(f"{col_name}_embed_{k}")
+        k += 1
 
-    df_data = pd.DataFrame(np.array(embedding_list), index=values, columns=[col_name])
+    df_data = pd.DataFrame(np.array(embedding_list), index=values)
     return df_data
 
 
-def get_new_base(df_data: pd.DataFrame) -> pd.DataFrame:
+def get_new_base(df_data: pd.DataFrame, col_name: str) -> pd.DataFrame:
     """
     Función que reduce el tamaño del embeding de df_data.
 
@@ -56,6 +60,8 @@ def get_new_base(df_data: pd.DataFrame) -> pd.DataFrame:
     ----------
     df_data: pd.DataFrame
         Tabla de datos con el embedding
+    col_name: str
+        Nombre de la columna procesada.
 
     Returns
     -------
@@ -64,7 +70,6 @@ def get_new_base(df_data: pd.DataFrame) -> pd.DataFrame:
     """
     pca = PCA(n_components=np.linalg.matrix_rank(df_data))
     pca_embedding = pd.DataFrame(pca.fit_transform(df_data), index=df_data.index)
-    col_name = df_data.columns[0]
     pca_embedding.columns = [f"{col_name}_embed_{i}" for i in pca_embedding.columns]
     pca_embedding.index.name = col_name
     return pca_embedding
@@ -323,7 +328,7 @@ class LlmEncoding(Encoding):
 
         for col in dataset.categorical_features:
             df_col = create_embedding(client, df[col].unique(), col_name=col)
-            pca_embedding = get_new_base(df_col)
+            pca_embedding = get_new_base(df_col, col)
             df_llm_embedding = pd.merge(df, pca_embedding.reset_index(), on=col)
 
         df_llm_embedding = df_llm_embedding.drop(columns=dataset.categorical_features)
