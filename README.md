@@ -12,7 +12,9 @@ This Python package provides tools for handling categorical variables in machine
 ## Installation
 
 ```bash
-pip install categorical-variables-treatment
+
+!git clone https://github.com/santhiperbolico/categorical_variables_treatment.git
+!pip install categorical_variables_treatment/src
 ```
 
 ## Usage
