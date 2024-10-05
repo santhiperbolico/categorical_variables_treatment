@@ -40,7 +40,7 @@ df_llm = llm_emb.fit_transform(df['ORGANIZATION_TYPE'])
 
 ## Documentation
 
-For more detailed information about the package and its functions, please refer to the [documentation](https://github.com/santhiperbolico/categorical_variables_treatment/wiki).
+For more detailed information about the package and its functions, please refer to the [documentation](https://github.com/santhiperbolico/categorical_variables_treatment/blob/main/embedding_aplicado_a_variables_categ_ricas.ipynb).
 
 ## Contributing
 
